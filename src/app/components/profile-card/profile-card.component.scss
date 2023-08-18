@@ -32,8 +32,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "stats leetify-rating";
-  grid-gap: 2rem;
-  padding: 1rem 2rem;
+  grid-gap: 1rem;
+  padding: 1rem 1rem;
   .stats {
     .stat {
       margin-bottom: 1rem;

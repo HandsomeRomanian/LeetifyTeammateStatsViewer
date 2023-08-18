@@ -43,10 +43,10 @@ export function matchmakingSkillLevelToRank(skillLevel?: number) {
 }
 
 export function matchmakingSkillLevelToImageUrl(skillLevel?: number): URL {
-  if (skillLevel && skillLevel > 0 && skillLevel < 19) {
+  if (skillLevel && skillLevel >= 0 && skillLevel < 19) {
     return new URL('https://leetify.com/assets/images/rank-icons/matchmaking' + skillLevel + '.png')
   } else {
-    return new URL('https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/0e457516ba13817a45b6c2a1d262fe7d0599bcbc/csgo/pak01_dir/resource/flash/econ/status_icons/skillgroup_none.png')
+    return new URL('https://leetify.com/assets/images/rank-icons/matchmaking0.png')
   }
 }
 

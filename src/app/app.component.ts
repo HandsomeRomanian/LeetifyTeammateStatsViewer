@@ -1,30 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { LeetifyUserData } from './data/models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public input = `
-  #  3 2 "Mach" STEAM_1:0:127366438 03:01 64 0 active 196608
-  # 14 3 "ClammySosa" STEAM_1:0:569443757 02:36 74 0 active 196608
-  #  6 5 "jdskilla2" STEAM_1:0:630112772 03:01 64 0 active 196608
-  #  7 6 "Mattyyy" STEAM_1:0:499256766 03:01 46 0 active 196608
-  #  8 7 "Shadow" STEAM_1:0:154185069 03:01 77 0 active 196608
-  #  9 8 "always 322" STEAM_1:0:59529440 03:01 85 0 active 196608
-  # 10 9 "TrashBoat" STEAM_1:1:544635849 03:01 61 0 active 196608
-  # 11 10 "Darth Plagueis The Wise" STEAM_1:0:445759556 03:01 63 0 active 196608
-  # 12 11 "Agent 37" STEAM_1:0:84671283 03:01 62 0 active 196608
-  # 13 12 "Oniii Chaaaannnn" STEAM_1:0:770427199 03:01 81 0 active 196608
-  `;
+export class AppComponent implements OnInit {
+  public input = `  `;
   public data: LeetifyUserData[] = []
+  private lastData = ``;
 
-  constructor(public httpClient: HttpClient) {
-    this.dataChanged();
+  constructor(public httpClient: HttpClient, private route: ActivatedRoute) {
+  }
+
+  public async ngOnInit() {
+    this.route.queryParams.subscribe({
+      next: (queryParams) => {
+        if (queryParams && btoa(queryParams['gameData']) !== this.lastData) {
+          this.lastData = btoa(queryParams['gameData']);
+          console.log(queryParams, atob(queryParams['gameData']))
+          this.input = atob(queryParams['gameData']) as string;
+          if (this.input) {
+            this.dataChanged();
+
+          }
+        }
+
+      }
+    })
   }
 
   public dataChanged() {
@@ -43,5 +50,9 @@ export class AppComponent {
     for (const steam64Id of steam64Ids) {
       this.data.push(await firstValueFrom(this.httpClient.get<LeetifyUserData>("https://api.leetify.com/api/profile/" + steam64Id)));
     }
+  }
+
+  public share() {
+    navigator.clipboard.writeText(location.host + "?gameData=" + btoa(this.input));
   }
 }

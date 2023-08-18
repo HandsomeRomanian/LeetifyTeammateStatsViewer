@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RankCardComponent } from './components/rank-card/rank-card.component';
 import { ProgressComponent } from './components/percent/progress.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ProgressComponent } from './components/percent/progress.component';
     ProgressComponent
   ],
   imports: [
+    RouterModule.forRoot([]),
     BrowserModule,
     HttpClientModule,
     FormsModule,

@@ -49,7 +49,16 @@
           LEETIFY RAITING
         </h3>
         <div class="rating">
-          {{user.recentGameRatings.leetify*100|number: '1.0-2'}}
+          <svg  height="84" width="84">
+            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%"
+              cy="50%" class="background" r="34" stroke-width="4"></circle>
+            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%"
+              cy="50%" class="outline poor" stroke-dasharray="213.62830044410595 213.62830044410595"
+              stroke-width="4" r="34" stroke-dashoffset="144.1991027997715"></circle>
+            <text x="50%" text-anchor="middle" class="score-text ng-star-inserted" y="60%">
+              {{user.recentGameRatings.leetify*100|number: '1.0-2'}}
+            </text>
+          </svg>
         </div>
         <div class="text-center">POOR</div>
       </div>
