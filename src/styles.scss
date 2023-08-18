@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
+
+$background-color: #19171e;
+$card-background-colors: #2a2732;
+$text-color: #fff;
+$t-color: #fff;
+$ct-color: #fff;
+$button-primary: rgb(247, 48, 113);
+$button-secondary: rgb(47, 43, 56);
+
+:root {
+  --bs-border-radius: 6px;
+}
+* {
+  text-rendering: optimizeLegibility;
+}
+a {
+  text-decoration: none;
+  color: $text-color;
+}
+body {
+  color: $text-color;
+  background-color: $background-color;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+.card {
+  background-color: $card-background-colors;
+  border: 1px solid #2f2b38;
+}
+
+button {
+  background-color: $button-primary;
+  padding: 0.5rem 1.5rem;
+  border-radius: 3px;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  &.secondary {
+    background-color: $button-secondary;
+  }
+}

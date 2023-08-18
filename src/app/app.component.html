@@ -1,0 +1,6 @@
+<input (change)="dataChanged()" [(ngModel)]="input" />
+
+
+<div class="list">
+  <app-profile-card *ngFor="let userData of data" [user]="userData"> </app-profile-card>
+</div>
