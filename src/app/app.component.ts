@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { LeetifyUserData } from './data/models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   private steamIds: string[] = [];
   private lastData = ``;
 
-  constructor(public httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(public httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
   public async ngOnInit() {
@@ -23,9 +23,10 @@ export class AppComponent implements OnInit {
       next: (queryParams) => {
         if (queryParams && queryParams['gameData'] !== this.lastData) {
           this.lastData = queryParams['gameData'];
-          this.input = queryParams['gameData'] as string;
+          if(queryParams['gameData'])
+          this.steamIds = (queryParams['gameData'] as string).split('_');
           if (this.input) {
-            this.dataChanged();
+            this.fetchData();
 
           }
         }
@@ -43,6 +44,13 @@ export class AppComponent implements OnInit {
       var steam64Id = BigInt(parts[2]) * 2n + 76561197960265728n + BigInt(parts[1]);
       return steam64Id.toString();
     });
+    let params = {
+      gameData: this.generateQueryParams()
+    }
+    this.router.navigate([], {
+      queryParams: params,
+      queryParamsHandling: 'merge'
+    })
     this.fetchData();
   }
 
@@ -52,7 +60,11 @@ export class AppComponent implements OnInit {
     }
   }
 
+  public generateQueryParams(): string {
+    return this.steamIds.join('_');
+  }
+
   public share() {
-    navigator.clipboard.writeText(location.host + "?gameData=" + this.data.map(x => x.meta.steam64Id).join(','));
+    navigator.clipboard.writeText(window.location.href.split('?')[0] + "?gameData=" + this.generateQueryParams());
   }
 }
