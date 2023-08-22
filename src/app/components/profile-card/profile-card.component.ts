@@ -16,9 +16,8 @@ export class ProfileCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user)
     this.faceItSkillLevel = this.user.games.filter(x => x.dataSource == 'faceit')[0]?.skillLevel;
-    this.valveSkillLevel = this.user.games.filter(x => x.dataSource == 'matchmaking')[0]?.skillLevel;
+    this.valveSkillLevel = this.user.games.filter(x => x.dataSource == 'matchmaking')[0]?.skillLevel || 0;
   }
 
 
