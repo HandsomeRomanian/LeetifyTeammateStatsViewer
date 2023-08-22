@@ -1,1 +1,1 @@
-<img *ngIf="this.skillLevel" [src]="imageUrl" [alt]="imageAlt">
+<img *ngIf="this.skillLevel || this.skillLevel === 0" [src]="imageUrl" [alt]="imageAlt">

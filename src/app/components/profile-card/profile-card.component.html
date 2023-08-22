@@ -49,12 +49,12 @@
           LEETIFY RAITING
         </h3>
         <div class="rating">
-          <svg  height="84" width="84">
-            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%"
-              cy="50%" class="background" r="34" stroke-width="4"></circle>
-            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%"
-              cy="50%" class="outline poor" stroke-dasharray="213.62830044410595 213.62830044410595"
-              stroke-width="4" r="34" stroke-dashoffset="144.1991027997715"></circle>
+          <svg height="84" width="84">
+            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%" cy="50%" class="background" r="34"
+              stroke-width="4"></circle>
+            <circle fill="transparent" shape-rendering="geometricPrecision" cx="50%" cy="50%" class="outline poor"
+              stroke-dasharray="213.62830044410595 213.62830044410595" stroke-width="4" r="34"
+              stroke-dashoffset="144.1991027997715"></circle>
             <text x="50%" text-anchor="middle" class="score-text ng-star-inserted" y="60%">
               {{user.recentGameRatings.leetify*100|number: '1.0-2'}}
             </text>
@@ -65,9 +65,13 @@
 
     </div>
     <div class="buttons">
-      <a class="profile" _blank href="https://leetify.com/app/profile/{{this.user.meta.steam64Id}}">Profile</a>
-      <a *ngIf="this.user.club" class="clan" _blank
-        href="https://leetify.com/app/clubs/dashboard/{{this.user.club.id}}">Clan</a>
+      <a class="profile" target="_blank" href="https://leetify.com/app/profile/{{this.user.meta.steam64Id}}">
+        Profile
+      </a>
+      <a *ngIf="this.user.club" class="clan" target="_blank"
+        href="https://leetify.com/app/clubs/dashboard/{{this.user.club.id}}">
+        Clan
+      </a>
     </div>
   </div>
 </div>
