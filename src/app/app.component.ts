@@ -50,13 +50,11 @@ export class AppComponent implements OnInit {
       queryParams: params,
       queryParamsHandling: 'merge'
     })
-    this.fetchData();
   }
 
   public async fetchData() {
 
     this.steamIds = this.steamIds.map(x => !!x ? x : ' ').sort((a, b) => a.toLowerCase() > b.toLowerCase() ? 1 : -1);
-    console.log(this.steamIds)
     for (const steam64Id of this.steamIds) {
       try {
         this.data.push(await firstValueFrom(this.httpClient.get<LeetifyUserData>("https://api.leetify.com/api/profile/" + steam64Id)));
