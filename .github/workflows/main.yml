@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  ghpages_deploy:
+  build_deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
 
@@ -25,22 +25,21 @@ jobs:
     - name: Build Angular App
       run: npm run build
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.1
+    - uses: JamesIves/github-pages-deploy-action@4.1.1
+      name: Deploy to GitHub Pages
       with:
         branch: gh-pages
         folder: dist/leetifygameviewer
 
-  firebase_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LIVIFY_TEAMS }}'
-          projectId: livify-teams
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      name: Deploy to Firebase Hosting
+      env:
+        FIREBASE_CLI_EXPERIMENTS: webframeworks
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LIVIFY_TEAMS }}'
+        projectId: livify-teams
+        channelId: live
 
 permissions:
   contents: write
