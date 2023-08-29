@@ -1,0 +1,14 @@
+{
+  "rules": {
+      ".write": "auth != null",
+      "orders": {
+          ".read": "auth != null && auth.token.isAdmin == true",
+          ".write": "auth != null && auth.token.isAdmin == true"
+      },
+      "users": {
+          "$uid": {
+              ".write": "auth.uid === $uid"
+          }
+      }
+  }
+}
