@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="name">{{ user.meta.name }}</h4>
+    <h4 class="name">{{ user.meta.name || " " }}</h4>
     <div class="rank">
       <app-rank-card class="valve" [source]="'valve'" [skillLevel]="this.valveSkillLevel"></app-rank-card>
       <app-rank-card *ngIf="!!this.faceItSkillLevel" class="faceit" [source]="'faceit'"
@@ -11,37 +11,37 @@
         <div class="stat">
           <div class="stat-text">
             <strong>Aim:</strong>
-            <div class="percent">{{user.recentGameRatings.aim | number: '2.0-0' }}</div>
+            <div class="percent">{{user.recentGameRatings!.aim | number: '2.0-0' }}</div>
           </div>
-          <app-progress [value]="user.recentGameRatings.aim"></app-progress>
+          <app-progress [value]="user.recentGameRatings!.aim"></app-progress>
         </div>
         <div class="stat">
           <div class="stat-text">
             <strong>Utility:</strong>
-            <div class="percent">{{user.recentGameRatings.utility | number: '2.0-0' }}</div>
+            <div class="percent">{{user.recentGameRatings!.utility | number: '2.0-0' }}</div>
           </div>
-          <app-progress [value]="user.recentGameRatings.utility"></app-progress>
+          <app-progress [value]="user.recentGameRatings!.utility"></app-progress>
         </div>
         <div class="stat">
           <div class="stat-text">
             <strong>Positioning:</strong>
-            <div class="percent">{{user.recentGameRatings.positioning | number: '2.0-0' }}</div>
+            <div class="percent">{{user.recentGameRatings!.positioning | number: '2.0-0' }}</div>
           </div>
-          <app-progress [value]="user.recentGameRatings.positioning"></app-progress>
+          <app-progress [value]="user.recentGameRatings!.positioning"></app-progress>
         </div>
         <div class="stat">
           <div class="stat-text">
             <strong>Opening:</strong>
-            <div class="percent">{{user.recentGameRatings.opening * 100 | number: '1.0-2' }}</div>
+            <div class="percent">{{user.recentGameRatings!.opening * 100 | number: '1.0-2' }}</div>
           </div>
-          <app-progress [min]="-50" [max]="50" [value]="user.recentGameRatings.opening"></app-progress>
+          <app-progress [min]="-50" [max]="50" [value]="user.recentGameRatings!.opening"></app-progress>
         </div>
         <div class="stat">
           <div class="stat-text">
             <strong>Clutch:</strong>
-            <div class="percent">{{user.recentGameRatings.clutch*100 | number: '1.0-2' }}</div>
+            <div class="percent">{{user.recentGameRatings!.clutch * 100 | number: '1.0-2' }}</div>
           </div>
-          <app-progress [min]="-15" [max]="15" [value]="user.recentGameRatings.clutch*10"></app-progress>
+          <app-progress [min]="-15" [max]="15" [value]="user.recentGameRatings!.clutch * 10"></app-progress>
         </div>
       </div>
       <div class="leetify-rating">
@@ -56,7 +56,7 @@
               stroke-dasharray="213.62830044410595 213.62830044410595" stroke-width="4" r="34"
               stroke-dashoffset="144.1991027997715"></circle>
             <text x="50%" text-anchor="middle" class="score-text ng-star-inserted" y="60%">
-              {{user.recentGameRatings.leetify*100|number: '1.0-2'}}
+              {{(user.recentGameRatings?.leetify || 0) * 100 | number: '1.0-2'}}
             </text>
           </svg>
         </div>
