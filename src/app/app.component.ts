@@ -23,11 +23,10 @@ export class AppComponent implements OnInit {
       next: (queryParams) => {
         if (queryParams && queryParams['gameData'] !== this.lastData) {
           this.lastData = queryParams['gameData'];
-          if(queryParams['gameData'])
-          this.steamIds = (queryParams['gameData'] as string).split('_');
+          if (queryParams['gameData'])
+            this.steamIds = (queryParams['gameData'] as string).split('_');
           if (this.input) {
             this.fetchData();
-
           }
         }
 
@@ -55,8 +54,21 @@ export class AppComponent implements OnInit {
   }
 
   public async fetchData() {
+
+    this.steamIds = this.steamIds.map(x => !!x ? x : ' ').sort((a, b) => a.toLowerCase() > b.toLowerCase() ? 1 : -1);
+    console.log(this.steamIds)
     for (const steam64Id of this.steamIds) {
-      this.data.push(await firstValueFrom(this.httpClient.get<LeetifyUserData>("https://api.leetify.com/api/profile/" + steam64Id)));
+      try {
+        this.data.push(await firstValueFrom(this.httpClient.get<LeetifyUserData>("https://api.leetify.com/api/profile/" + steam64Id)));
+      } catch (e) {
+        console.error(steam64Id + " dosen't have a leetify profile we could fetch data from")
+        this.data.push({
+          'games': [],
+          'meta': {
+            name: '', steam64Id, steamAvatarUrl: '', isCollector: false, isLeetifyStaff: false, isProPlan: false, leetifyUserId: '', faceitNickname: '', platformBans: []
+          },
+        })
+      }
     }
   }
 
