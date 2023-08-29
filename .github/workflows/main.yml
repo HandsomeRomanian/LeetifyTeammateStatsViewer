@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  ghpages_deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
 
@@ -30,6 +30,18 @@ jobs:
       with:
         branch: gh-pages
         folder: dist/leetifygameviewer
+
+  firebase_deploy:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LIVIFY_TEAMS }}'
+          projectId: livify-teams
 
 permissions:
   contents: write
